@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Geolocation Distance</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        #history {
+            margin-top: 20px;
+            text-align: left;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Geolocation Distance Checker</h1>
+    <button onclick="getLocation()">Where am I?</button>
+    <button onclick="resetResult()">Back</button>
+    <p id="output"></p>
+
+    <div id="history">
+        <h3>Check History:</h3>
+        <ul id="historyList"></ul>
+    </div>
+
+    <script>
+        // Kasem Bundit University coordinates
+        const kbuLat = 13.7565;
+        const kbuLon = 100.6014;
+
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showDistance, showError);
+            } else {
+                document.getElementById("output").innerHTML = "Geolocation is not supported by this browser.";
+            }
+        }
+
+        function showDistance(position) {
+            const userLat = position.coords.latitude;
+            const userLon = position.coords.longitude;
+
+            const distance = haversine(userLat, userLon, kbuLat, kbuLon);
+            const message = `You're ${distance.toFixed(2)} km away from the Kasem Bundit University.`;
+
+            document.getElementById("output").innerHTML = message;
+            addHistory(message);
+        }
+
+        // Haversine formula
+        function haversine(lat1, lon1, lat2, lon2) {
+            const R = 6371;
+            const dLat = deg2rad(lat2 - lat1);
+            const dLon = deg2rad(lon2 - lon1);
+            const a = 
+                Math.sin(dLat/2) * Math.sin(dLat/2) +
+                Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
+                Math.sin(dLon/2) * Math.sin(dLon/2);
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+            return R * c;
+        }
+
+        function deg2rad(deg) {
+            return deg * (Math.PI/180);
+        }
+
+        function showError(error) {
+            switch(error.code) {
+                case error.PERMISSION_DENIED:
+                    document.getElementById("output").innerHTML = "User denied the request for Geolocation."
+                    break;
+                case error.POSITION_UNAVAILABLE:
+                    document.getElementById("output").innerHTML = "Location information is unavailable."
+                    break;
+                case error.TIMEOUT:
+                    document.getElementById("output").innerHTML = "The request to get user location timed out."
+                    break;
+                case error.UNKNOWN_ERROR:
+                    document.getElementById("output").innerHTML = "An unknown error occurred."
+                    break;
+            }
+        }
+
+        function resetResult() {
+            document.getElementById("output").innerHTML = "";
+        }
+
+        function addHistory(message) {
+            const list = document.getElementById("historyList");
+            const li = document.createElement("li");
+            const time = new Date().toLocaleString();
+            li.textContent = `${time} - ${message}`;
+            list.appendChild(li);
+        }
+    </script>
+
+</body>
+</html>

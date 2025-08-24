@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Calculate Change</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: #f7f9fa;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            background: #fff;
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 32px 24px 24px 24px;
+            border-radius: 12px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+        }
+        h2 {
+            margin-bottom: 18px;
+            color: #2d3748;
+            text-align: center;
+        }
+        label {
+            display: block;
+            margin-bottom: 7px;
+            color: #4a5568;
+            font-size: 15px;
+        }
+        input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 14px;
+            border: 1px solid #cbd5e0;
+            border-radius: 6px;
+            font-size: 16px;
+            box-sizing: border-box;
+            transition: border-color 0.2s;
+        }
+        input[type="number"]:focus {
+            border-color: #3182ce;
+            outline: none;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background: #3182ce;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.2s;
+            margin-bottom: 8px;
+        }
+        button:hover {
+            background: #2563eb;
+        }
+        #result {
+            margin-top: 18px;
+            font-size: 16px;
+            color: #2d3748;
+            background: #ebf8ff;
+            border-radius: 6px;
+            padding: 12px;
+            min-height: 32px;
+        }
+        .error {
+            color: #e53e3e;
+            background: #fff5f5;
+            border-radius: 6px;
+            padding: 10px;
+        }
+        .denom-list {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        .denom-list li {
+            padding: 6px 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .denom-list li:last-child {
+            border-bottom: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Calculate Change</h2>
+        <label for="amount">Enter Amount:</label>
+        <input type="number" id="amount" placeholder="Enter amount">
+        <button onclick="calculateChange()">Submit</button>
+        <button onclick="resetForm()">⬅ Back</button>
+        <div id="result"></div>
+    </div>
+    <script>
+        function calculateChange() {
+            const amount = parseInt(document.getElementById('amount').value);
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = "";
+
+            if (isNaN(amount) || amount <= 0) {
+                resultDiv.innerHTML = '<div class="error">⚠️ Please enter a valid amount.</div>';
+                return;
+            }
+
+            const denominations = [500, 100, 50, 20, 10, 5, 2, 1];
+            let remaining = amount;
+            let output = '<ul class="denom-list">';
+
+            denominations.forEach(denom => {
+                const count = Math.floor(remaining / denom);
+                if (count > 0) {
+                    output += `<li><strong>${count}</strong> × ฿${denom}</li>`;
+                    remaining %= denom;
+                }
+            });
+            output += '</ul>';
+            resultDiv.innerHTML = output;
+        }
+
+        function resetForm() {
+            document.getElementById('amount').value = "";
+            document.getElementById('result').innerHTML = "";
+            document.getElementById('amount').focus();
+        }
+
+        // Trigger calculateChange() when pressing Enter in the input
+        document.getElementById('amount').addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                calculateChange();
+            }
+        });
+    </script>
+</body>
+</html>

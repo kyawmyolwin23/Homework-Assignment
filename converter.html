@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Measurement Converter</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    label, select, input, button {
+      margin: 5px;
+      padding: 5px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Measurement Converter</h1>
+
+  <!-- Input unit -->
+  <label for="fromUnit">From:</label>
+  <select id="fromUnit">
+    <option value="inch">Inch</option>
+    <option value="cm">Centimeter</option>
+    <option value="m">Meter</option>
+    <option value="mm">Millimeter</option>
+  </select>
+
+  <!-- Output unit -->
+  <label for="toUnit">To:</label>
+  <select id="toUnit">
+    <option value="cm">Centimeter</option>
+    <option value="inch">Inch</option>
+    <option value="m">Meter</option>
+    <option value="mm">Millimeter</option>
+  </select>
+  <br>
+
+  <!-- Value input -->
+  <label for="valueInput">Value:</label>
+  <input type="number" id="valueInput" placeholder="Enter value" />
+
+  <button onclick="convert()">Convert</button>
+  <button onclick="resetForm()">Back</button>
+
+  <p id="result"></p>
+
+  <script>
+    const unitToMeters = {
+      inch: 0.0254,
+      cm: 0.01,
+      m: 1,
+      mm: 0.001
+    };
+
+    function convert() {
+      const fromUnit = document.getElementById("fromUnit").value;
+      const toUnit = document.getElementById("toUnit").value;
+      const value = parseFloat(document.getElementById("valueInput").value);
+
+      if (isNaN(value)) {
+        document.getElementById("result").innerText = "Please enter a valid number.";
+        return;
+      }
+
+      // Convert from source unit to meters
+      const valueInMeters = value * unitToMeters[fromUnit];
+      // Convert from meters to target unit
+      const convertedValue = valueInMeters / unitToMeters[toUnit];
+
+      document.getElementById("result").innerText =
+        `${value} ${fromUnit} = ${convertedValue.toFixed(2)} ${toUnit}`;
+    }
+
+    function resetForm() {
+      document.getElementById("fromUnit").selectedIndex = 0;
+      document.getElementById("toUnit").selectedIndex = 0;
+      document.getElementById("valueInput").value = "";
+      document.getElementById("result").innerText = "";
+      document.getElementById("valueInput").focus();
+    }
+
+    // Enter key event
+    document.getElementById("valueInput").addEventListener("keydown", function (event) {
+      if (event.key === "Enter") {
+        convert();
+      }
+    });
+  </script>
+</body>
+</html>

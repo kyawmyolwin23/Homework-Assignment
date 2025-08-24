@@ -1,0 +1,223 @@
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f5f5f5;
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background: white;
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    border-radius: 10px;
+}
+
+/* Header Styles */
+.header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 30px;
+    text-align: center;
+    border-radius: 10px 10px 0 0;
+    margin: -20px -20px 20px -20px;
+}
+
+.header table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.header h3 {
+    margin: 5px 0;
+    font-size: 1.8em;
+    font-weight: 300;
+}
+
+.header h3:first-child {
+    font-size: 2.2em;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+/* Section Styles */
+.Personal-Information,
+.skills_interest,
+.Education {
+    margin: 30px 0;
+}
+
+.Personal-Information h3,
+.Education h3 {
+    color: #667eea;
+    font-size: 1.4em;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #667eea;
+    padding-bottom: 5px;
+}
+
+/* Personal Info Styles */
+.Personal-Information p {
+    margin: 10px 0;
+    font-size: 1.1em;
+    padding: 8px 0;
+}
+
+.Personal-Information p:before {
+    content: "📧 ";
+    margin-right: 10px;
+}
+
+.Personal-Information p:nth-child(3):before {
+    content: "📱 ";
+}
+
+/* Skills and Interest Table */
+.skills_interest table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.skills_interest th {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 15px;
+    text-align: center;
+    font-size: 1.2em;
+    font-weight: 600;
+}
+
+.skills_interest td {
+    padding: 20px;
+    vertical-align: top;
+    border-bottom: 1px solid #eee;
+}
+
+.skills_interest td:first-child {
+    border-right: 1px solid #eee;
+}
+
+.skills_interest ul {
+    list-style: none;
+    padding: 0;
+}
+
+.skills_interest li {
+    padding: 8px 0;
+    position: relative;
+    padding-left: 20px;
+}
+
+.skills_interest li:before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: #667eea;
+    font-weight: bold;
+}
+
+/* Education Styles */
+.Education ul {
+    list-style: none;
+    padding: 0;
+}
+
+.Education li {
+    background: #f8f9fa;
+    margin: 15px 0;
+    padding: 20px;
+    border-radius: 8px;
+    border-left: 4px solid #667eea;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.Education li span {
+    display: inline-block;
+    margin-right: 15px;
+}
+
+.Education li span b {
+    color: #667eea;
+    font-size: 1.1em;
+}
+
+.Education li p {
+    margin: 10px 0 0 0;
+    color: #666;
+    font-style: italic;
+}
+
+/* Horizontal Rules */
+hr {
+    border: none;
+    height: 2px;
+    background: linear-gradient(to right, transparent, #667eea, transparent);
+    margin: 30px 0;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    body {
+        margin: 10px;
+        padding: 15px;
+    }
+    
+    .header {
+        padding: 20px;
+        margin: -15px -15px 15px -15px;
+    }
+    
+    .header h3 {
+        font-size: 1.5em;
+    }
+    
+    .header h3:first-child {
+        font-size: 1.8em;
+    }
+    
+    .skills_interest table {
+        font-size: 0.9em;
+    }
+    
+    .skills_interest th,
+    .skills_interest td {
+        padding: 12px;
+    }
+}
+
+/* Hover Effects */
+.Education li:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    transition: all 0.3s ease;
+}
+
+.skills_interest td:hover {
+    background-color: #f8f9fa;
+    transition: background-color 0.3s ease;
+}
+
+/* Print Styles */
+@media print {
+    body {
+        box-shadow: none;
+        margin: 0;
+        padding: 0;
+        background: white;
+    }
+    
+    .header {
+        background: #667eea !important;
+        -webkit-print-color-adjust: exact;
+    }
+}
